@@ -1,4 +1,7 @@
-FROM node:12-alpine as build
+FROM node:15-alpine as build
+ENV NPM_CONFIG_COLOR false
+ENV NPM_CONFIG_PROGRESS false
+ENV NPM_CONFIG_SPIN false
 WORKDIR /node
 RUN apk --no-cache \
   --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
@@ -14,7 +17,7 @@ RUN cd /node/app/client && \
   npm i && \
   npm run build
 
-FROM node:12-alpine
+FROM node:15-alpine
 COPY --from=build /node /node
 RUN apk --no-cache \
   --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
